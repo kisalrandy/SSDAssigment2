@@ -163,7 +163,71 @@
             gapi.auth2.getAuthInstance().signOut();
         }
 
+// function to delete files from google API
+        function removeFile(id) {
+            result = confirm('Are you sure you need to remove file: '+id + ' ?')
+            if(result) {
+                clear()
+                showSpinner()
+                gapi.client.drive.files.delete({
+                    'fileId': id,
+                }).then(apiResponse => {
+                    hideSpinner()
+                    listFiles()
+                })
+            }
+        }
 
+        // display messages
+        function showMessage(msg) {
+            fileList.style.display = 'none'
+            var msgBox = document.getElementById('message')
+            msgBox.style.display = 'block'
+            msgBox.innerHTML = msg
+
+        }
+
+        /**
+         * Append a pre element to the body containing the given message
+         * as its text node. Used to display the results of the API call.
+         *
+         * @param {string} message Text to be placed in pre element.
+         */
+        function appendPre(message, id) {
+
+            var pre = document.getElementById('content');
+            var node = document.createElement("TR"); // Create a <li> node
+            var node1 = document.createElement("TD");
+
+            var pnode = document.createElement("P"); // Create a text node
+            var txt = document.createTextNode(message)
+            pnode.setAttribute('class', 'file-name')
+            pnode.appendChild(txt)
+
+            var snode = document.createElement("P")
+            snode.setAttribute('class', 'subscript')
+            var txt1 = document.createTextNode(id)
+            snode.appendChild(txt1)
+
+            node1.appendChild(pnode)
+            node1.appendChild(snode)
+
+            var node2 = document.createElement("TD");
+            node2.setAttribute('class', 'file-name')
+
+            node2.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" class="svg-inline--fa fa-trash fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg>'
+            node2.style.cursor = 'pointer'
+	    node2.setAttribute('class', 'remove-icon');
+            node2.onclick = function() {
+                removeFile(id)
+            }
+
+
+            node.appendChild(node1)
+            node.appendChild(node2)
+            fileList.appendChild(node)
+
+        }
 
 
 
