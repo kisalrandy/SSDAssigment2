@@ -260,17 +260,17 @@
             })
         }
 		
+        // upload files to the drive
+        function uploadToDrive(file) {
+            gapi.client.drive.files.create({
 
+            })
+                .then(function (res) {
+                    console.log(res)
+                })
+        }
 
-
-
-
-
-
-
-
-
-		        // Upload file function
+		// Upload file function
         function uploadFile(e) {
             e.preventDefault();
             var files = e.target.fileToUpload.files
@@ -315,143 +315,6 @@
             }
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	</script>
 
