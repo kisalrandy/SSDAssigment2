@@ -67,6 +67,19 @@
         // gives the full permission to access the files in google drive except the for application files
         var SCOPES = 'https://www.googleapis.com/auth/drive';
 
+// binding elements
+        var authorizeButton = document.getElementById('authorize_button');
+
+        var getStartedButton = document.getElementById('get-started');
+
+        var signoutButton = document.getElementById('signout_button');
+
+        var uploadBtn = document.getElementById('fileInput')
+        var uploadForm = document.getElementById('uploadForm')
+
+        var fileList = document.getElementById('fileList');
+
+        uploadForm.onsubmit = uploadFile
 
 
 
