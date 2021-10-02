@@ -56,8 +56,16 @@
         <footer>SSD Assignment 2 </footer>
 	</div>
 
+	<script type="text/javascript">
+		// initilize the client_id and the API_key using developer console data
+        var CLIENT_ID = '413139592377-r40j0ih6mlg284kgirgue1om6hei4nib.apps.googleusercontent.com';
+        var API_KEY = 'AIzaSyASLU9MkSNXmfMJSsZTiQazjtTHYXQh6qw';
 
+        // obtain the discovery document for the google drive api version 3
+        var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 
+        // gives the full permission to access the files in google drive except the for application files
+        var SCOPES = 'https://www.googleapis.com/auth/drive';
 
 
 
@@ -308,15 +316,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
+	</script>
 
 
 
