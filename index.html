@@ -259,154 +259,62 @@
                 showMessage('Error: Unable to connect to internet !');
             })
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
+        // upload files to the drive
+        function uploadToDrive(file) {
+            gapi.client.drive.files.create({
+
+            })
+                .then(function (res) {
+                    console.log(res)
+                })
+        }
+
+		// Upload file function
+        function uploadFile(e) {
+            e.preventDefault();
+            var files = e.target.fileToUpload.files
+
+            // bind elements
+            var btn = document.getElementById('btnUpload')
+            var input = document.getElementById('fileInput')
+
+            // if files are added upload to the drive
+            if(files.length > 0) {
+
+                var file = files.item(0)
+
+                btn.setAttribute('class', 'button primary submitting')
+                gapi.client.drive.files.create({
+                    'content-type': 'application/json',
+                    uploadType: 'multipart',
+                    name: file.name,
+                    mimeType: file.type,
+                    fields: 'id, name, kind, size'
+                }).then(apiResponse => {
+                    btn.setAttribute('class', 'button primary')
+
+                    // reset the upload form
+                    uploadForm.reset();
+
+                    // display the uploaded files
+                    listFiles()
+                })
+                .catch(() => {
+                    btn.setAttribute('class', 'button primary')
+                    alert('Unkown error occured! Please try again later.')
+
+                    // reset the upload form
+                    uploadForm.reset();
+                })
+
+
+            } else {
+                // give an alert
+                alert('Please choose a file')
+            }
+
+        }
 
 	</script>
 
