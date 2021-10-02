@@ -81,23 +81,10 @@
 
         uploadForm.onsubmit = uploadFile
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		// load the auth2 and API client libraries
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
 
 
 
