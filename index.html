@@ -228,9 +228,37 @@
             fileList.appendChild(node)
 
         }
+		
+		 // clear the file list
+        function clear() {
+            document.getElementById('fileList').innerHTML = ""
+        }
 
+		// display the files
+        function listFiles() {
+            clear()
+            showSpinner()
+            gapi.client.drive.files.list({
+                'pageSize': 10,
+                'fields': "nextPageToken, files(id, name)"
+            }).then(function (response) {
 
+                hideSpinner()
+                var files = response.result.files;
+                if (files && files.length > 0) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        appendPre(file.name, file.id)
+                    }
 
+                } else {
+                    showMessage('No files found.');
+
+                }
+            }).catch(() => {
+                showMessage('Error: Unable to connect to internet !');
+            })
+        }
 
 
 
