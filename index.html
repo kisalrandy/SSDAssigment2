@@ -111,6 +111,35 @@
             });
         }
 
+   /**
+         *  Called when the signed in status changes, to update the UI
+         *  appropriately. After a sign-in, the API is called.
+         */
+        function updateSigninStatus(isSignedIn) {
+            if (isSignedIn) {
+                authorizeButton.style.display = 'none';
+                getStartedButton.style.display = 'none';
+                signoutButton.style.display = 'block';
+                uploadForm.style.display = 'block';
+                document.getElementById('box').style.display = 'block';
+                document.getElementById('innerWrapper').style.display = 'block';
+                document.getElementById('intro-banner').style.display = 'block';
+                document.getElementById('welcome-banner').style.display = 'none';
+
+                listFiles();
+            } else {
+                authorizeButton.style.display = 'block';
+                getStartedButton.style.display = 'block';
+                signoutButton.style.display = 'none';
+                uploadForm.style.display = 'none';
+                document.getElementById('box').style.display = 'none'
+                document.getElementById('innerWrapper').style.display = 'none';
+                document.getElementById('intro-banner').style.display = 'none';
+                document.getElementById('welcome-banner').style.display = 'block';
+
+                clear()
+            }
+        }
 
 
 
