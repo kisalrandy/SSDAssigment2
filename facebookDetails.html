@@ -57,18 +57,49 @@
         statusChangeCallback(response);
       });
     }
-    function testAPI(){
-        FB.api('/me?fields=name,email,birthday,location', function(response){
-          if(response && !response.error){
-            buildProfile(response);
-            }
+    function testAPI() {
+      FB.api('/me?fields=name,email,birthday,location', function (response) {
+        if (response && !response.error) {
+          buildProfile(response);
         }
-    )}
-    function logout(){
-        FB.logout(function(response){
-          setElements(false);
-        });
       }
+      )
+    }
+    function buildProfile(user) {
+      let profile = `
+         <br>
+          <h2 class="text-center">Hello ! ${user.name}</h2>
+          <br>
+          <ul class="list-group">
+            <li class="list-group-item text-light bg-dark text-center fw-bold">User ID : ${user.id}</li>
+            <li class="list-group-item text-light bg-dark text-center fw-bold">Email : ${user.email}</li>
+            <li class="list-group-item text-light bg-dark text-center fw-bold">Birthday : ${user.birthday}</li>
+            <li class="list-group-item text-light bg-dark text-center fw-bold">User Location : ${user.location.name}</li>
+          </ul>
+        `;
+
+      document.getElementById('profile').innerHTML = profile;
+    }
+    function logout() {
+      FB.logout(function (response) {
+        setElements(false);
+      });
+    }
+    function setElements(isLoggedIn) {
+      if (isLoggedIn) {
+        document.getElementById('logout').style.display = 'block';
+        document.getElementById('profile').style.display = 'block';
+        document.getElementById('fb-btn').style.display = 'none';
+        document.getElementById('heading').style.display = 'none';
+        document.getElementById('heading-logged').style.display = 'block';
+      } else {
+        document.getElementById('logout').style.display = 'none';
+        document.getElementById('profile').style.display = 'none';
+        document.getElementById('fb-btn').style.display = 'block';
+        document.getElementById('heading').style.display = 'block';
+        document.getElementById('heading-logged').style.display = 'none';
+      }
+    }
   </script>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
@@ -82,7 +113,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">
-            <a class="nav-link" id="logout" onclick="logout()" href="#">Logout</a>
+          <a class="nav-link" id="logout" onclick="logout()" href="#">Logout</a>
         </li>
         <li class="nav-item">
           <fb:login-button id="fb-btn" scope="public_profile,email,user_birthday" onlogin="checkLoginState();">
@@ -91,6 +122,12 @@
       </ul>
     </div>
   </nav>
+  <div class="container-fluid">
+    <br>
+    <h2 class="text-center" id="heading">Log in to view your profile</h2>
+    <h2 id="heading-logged">Your Details</h2>
+    <div id="profile"></div>
+  </div>
 </body>
 
 </html>
