@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickDetails</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickDetails</title>
 </head>
+
 <body>
-    <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '556813315595465',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v12.0'
-          });
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
-        };
-        (function(d, s, id){
-           var js, fjs = d.getElementsByTagName(s)[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement(s); js.id = id;
-           js.src = "https://connect.facebook.net/en_US/sdk.js";
-           fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
-    </script>
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '556813315595465',
+        cookie: true,
+        xfbml: true,
+        version: 'v12.0'
+      });
+      FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+      });
+    };
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    function statusChangeCallback(response) {
+      if (response.status === 'connected') {
+        console.log('Logged in and authenticated');
+      } else {
+        console.log('Not authenticated');
+      }
+    }
+    function checkLoginState() {
+      FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+      });
+    }
+  </script>
+  <fb:login-button id="fb-btn" scope="public_profile,email,user_birthday" onlogin="checkLoginState();">
+  </fb:login-button>
 </body>
+
 </html>
