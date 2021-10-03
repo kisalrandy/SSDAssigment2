@@ -1,327 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 5 Buttons with Icons Example</title>
+      <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+      <!-- Demo CSS -->
+	<link rel="stylesheet" href="css/demo.css">
 
-<head>
-    <title>Drive App</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" media="screen" href="design.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-</head>
+      <style>
+    .btn-label {
+	position: relative;
+	left: -12px;
+	display: inline-block;
+	padding: 6px 12px;
+	background: rgba(0, 0, 0, 0.15);
+	border-radius: 3px 0 0 3px;
+}
 
-<body>
-	<div class="wrapper">
-    <!-- Set the title of the page -->
-        <div class="title-bar">
-            <p class="title">Drive APP</p>
-            <button class="menu-items" id="authorize_button" style="display: none;">Log In</button>
-            <button class="menu-items" id="signout_button" style="display: none;">Sign Out</button>
+.btn-labeled {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.btn {
+	margin-bottom: 10px;
+}
+      </style>
+
+  </head>
+  <body>
+ <header class="intro">
+ <h1>OAuth Client Web Application</h1>
+     <div id="title-banner" style="display:none;">
+     <img src="driveandfb.jpg">
+     </div>
+
+
+ </header>
+
+ <main>
+  <article>
+  <p>Client Application for Google drive and Facebook</p>
+
+      <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+             <div class="col-md-12"><a class="btn btn-lg btn-google btn-block text-uppercase btn-outline"href="drive.html"><img src="https://img.icons8.com/fluency/48/000000/google-drive--v2.png"/> Log in With Google Drive</a></div>
         </div>
-
-<!-- Design of the welcome page -->
-        <div id="welcome-banner" style="display:none;">
-            <h1>Welcome to Drive App !</h1>
-            <img src="drive-intro-image.png">
-            <button id="get-started" class="button primary" style="margin: 30px 0 0 0;">Get started !</button>
+        <div class="col-md-12">
+            <div class="col-md-12"><a class="btn btn-lg btn-google btn-block text-uppercase btn-outline"href="facebookDetails.html"><img src="https://img.icons8.com/fluency/50/000000/facebook-new.png"> Log in With Facebook</a></div>
         </div>
+    </div>
+</div>
+      <!-- End Bootstrap 5 Buttons HTML -->
 
-<!-- backgroung image -->
-        <div id="intro-banner" style="display: none;">
-            <img src="banner.png">
-        </div>
+  </article>
+ </main>
 
-		<div id="innerWrapper" class="inner-wrapper" style="display:none;">
-			<!-- File upload form -->
-            <form id="uploadForm">
-                <div class="form-input upload-box">
-                    <input class = "file-upload" id="fileInput" type="file" name="fileToUpload" />
-                </div>
-                <div class="form-input">
-                    <input id="btnUpload" class="button primary" type="submit" value="Upload">
-                </div>
-            </form>
+  <footer class="credit">Developers:H.K.Kisal Randula,Chathura,A.P.Manjari Mandara,Amanda</footer>
+<!-- Bootstrap 5 JS -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 
-<!-- display the file list -->
-            <div id="box" class="list">
-                <p class="list-header">My Files</p>
-                <div id="message" style="display: none;"></div>
-                <div id="spinner" style="display: none;">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </div>
-                <table id="fileList">
-                </table>
-                <pre id="content" style="white-space: pre-wrap;"></pre>
-            </div>
-
-		</div>
-        <footer>SSD Assignment 2 </footer>
-	</div>
-
-	<script type="text/javascript">
-		// initilize the client_id and the API_key using developer console data
-        var CLIENT_ID = '413139592377-r40j0ih6mlg284kgirgue1om6hei4nib.apps.googleusercontent.com';
-        var API_KEY = 'AIzaSyASLU9MkSNXmfMJSsZTiQazjtTHYXQh6qw';
-
-        // obtain the discovery document for the google drive api version 3
-        var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-
-        // gives the full permission to access the files in google drive except the for application files
-        var SCOPES = 'https://www.googleapis.com/auth/drive';
-
-// binding elements
-        var authorizeButton = document.getElementById('authorize_button');
-
-        var getStartedButton = document.getElementById('get-started');
-
-        var signoutButton = document.getElementById('signout_button');
-
-        var uploadBtn = document.getElementById('fileInput')
-        var uploadForm = document.getElementById('uploadForm')
-
-        var fileList = document.getElementById('fileList');
-
-        uploadForm.onsubmit = uploadFile
-
-		// load the auth2 and API client libraries
-        function handleClientLoad() {
-            gapi.load('client:auth2', initClient);
-        }
-
-		 /**
-         *  Initializes the API client library and sets up sign-in state
-         *  listeners.
-         */
-        function initClient() {
-            gapi.client.init({
-                apiKey: API_KEY,
-                clientId: CLIENT_ID,
-                discoveryDocs: DISCOVERY_DOCS,
-                scope: SCOPES
-            }).then(function () {
-
-                // Listen for sign-in state changes.
-                gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-                // Handle the initial sign-in state.
-                updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-                authorizeButton.onclick = handleAuthClick;
-                getStartedButton.onclick = handleAuthClick;
-                signoutButton.onclick = handleSignoutClick;
-            }, function (error) {
-                appendPre(JSON.stringify(error, null, 2));
-            });
-        }
-
-   /**
-         *  Called when the signed in status changes, to update the UI
-         *  appropriately. After a sign-in, the API is called.
-         */
-        function updateSigninStatus(isSignedIn) {
-            if (isSignedIn) {
-                authorizeButton.style.display = 'none';
-                getStartedButton.style.display = 'none';
-                signoutButton.style.display = 'block';
-                uploadForm.style.display = 'block';
-                document.getElementById('box').style.display = 'block';
-                document.getElementById('innerWrapper').style.display = 'block';
-                document.getElementById('intro-banner').style.display = 'block';
-                document.getElementById('welcome-banner').style.display = 'none';
-
-                listFiles();
-            } else {
-                authorizeButton.style.display = 'block';
-                getStartedButton.style.display = 'block';
-                signoutButton.style.display = 'none';
-                uploadForm.style.display = 'none';
-                document.getElementById('box').style.display = 'none'
-                document.getElementById('innerWrapper').style.display = 'none';
-                document.getElementById('intro-banner').style.display = 'none';
-                document.getElementById('welcome-banner').style.display = 'block';
-
-                clear()
-            }
-        }
-
-		 // when the button clicked sign in the user
-        function handleAuthClick(event) {
-            gapi.auth2.getAuthInstance().signIn();
-        }
-
-        // show spinner when loading
-        function showSpinner() {
-            var spinner = document.getElementById('spinner')
-            spinner.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" class="svg-inline--fa fa-spinner fa-w-16 fa-spin" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>'
-            spinner.style.display = 'block'
-        }
-
-        // hide the spinner after loading
-        function hideSpinner() {
-            spinner.style.display = 'none'
-        }
-
-        // when the button clicked sign out the user
-        function handleSignoutClick(event) {
-            gapi.auth2.getAuthInstance().signOut();
-        }
-
-// function to delete files from google API
-        function removeFile(id) {
-            result = confirm('Are you sure you need to remove file: '+id + ' ?')
-            if(result) {
-                clear()
-                showSpinner()
-                gapi.client.drive.files.delete({
-                    'fileId': id,
-                }).then(apiResponse => {
-                    hideSpinner()
-                    listFiles()
-                })
-            }
-        }
-
-        // display messages
-        function showMessage(msg) {
-            fileList.style.display = 'none'
-            var msgBox = document.getElementById('message')
-            msgBox.style.display = 'block'
-            msgBox.innerHTML = msg
-
-        }
-
-        /**
-         * Append a pre element to the body containing the given message
-         * as its text node. Used to display the results of the API call.
-         *
-         * @param {string} message Text to be placed in pre element.
-         */
-        function appendPre(message, id) {
-
-            var pre = document.getElementById('content');
-            var node = document.createElement("TR"); // Create a <li> node
-            var node1 = document.createElement("TD");
-
-            var pnode = document.createElement("P"); // Create a text node
-            var txt = document.createTextNode(message)
-            pnode.setAttribute('class', 'file-name')
-            pnode.appendChild(txt)
-
-            var snode = document.createElement("P")
-            snode.setAttribute('class', 'subscript')
-            var txt1 = document.createTextNode(id)
-            snode.appendChild(txt1)
-
-            node1.appendChild(pnode)
-            node1.appendChild(snode)
-
-            var node2 = document.createElement("TD");
-            node2.setAttribute('class', 'file-name')
-
-            node2.innerHTML = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" class="svg-inline--fa fa-trash fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg>'
-            node2.style.cursor = 'pointer'
-	    node2.setAttribute('class', 'remove-icon');
-            node2.onclick = function() {
-                removeFile(id)
-            }
-
-
-            node.appendChild(node1)
-            node.appendChild(node2)
-            fileList.appendChild(node)
-
-        }
-		
-		 // clear the file list
-        function clear() {
-            document.getElementById('fileList').innerHTML = ""
-        }
-
-		// display the files
-        function listFiles() {
-            clear()
-            showSpinner()
-            gapi.client.drive.files.list({
-                'pageSize': 10,
-                'fields': "nextPageToken, files(id, name)"
-            }).then(function (response) {
-
-                hideSpinner()
-                var files = response.result.files;
-                if (files && files.length > 0) {
-                    for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-                        appendPre(file.name, file.id)
-                    }
-
-                } else {
-                    showMessage('No files found.');
-
-                }
-            }).catch(() => {
-                showMessage('Error: Unable to connect to internet !');
-            })
-        }
-		
-        // upload files to the drive
-        function uploadToDrive(file) {
-            gapi.client.drive.files.create({
-
-            })
-                .then(function (res) {
-                    console.log(res)
-                })
-        }
-
-		// Upload file function
-        function uploadFile(e) {
-            e.preventDefault();
-            var files = e.target.fileToUpload.files
-
-            // bind elements
-            var btn = document.getElementById('btnUpload')
-            var input = document.getElementById('fileInput')
-
-            // if files are added upload to the drive
-            if(files.length > 0) {
-
-                var file = files.item(0)
-
-                btn.setAttribute('class', 'button primary submitting')
-                gapi.client.drive.files.create({
-                    'content-type': 'application/json',
-                    uploadType: 'multipart',
-                    name: file.name,
-                    mimeType: file.type,
-                    fields: 'id, name, kind, size'
-                }).then(apiResponse => {
-                    btn.setAttribute('class', 'button primary')
-
-                    // reset the upload form
-                    uploadForm.reset();
-
-                    // display the uploaded files
-                    listFiles()
-                })
-                .catch(() => {
-                    btn.setAttribute('class', 'button primary')
-                    alert('Unkown error occured! Please try again later.')
-
-                    // reset the upload form
-                    uploadForm.reset();
-                })
-
-
-            } else {
-                // give an alert
-                alert('Please choose a file')
-            }
-
-        }
-
-	</script>
-
-    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
-        onreadystatechange="if (this.readyState === 'complete') this.onload()">
-        </script>
-</body>
-
-
+  </body>
 </html>
