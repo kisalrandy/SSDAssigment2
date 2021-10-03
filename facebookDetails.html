@@ -45,8 +45,11 @@
     function statusChangeCallback(response) {
       if (response.status === 'connected') {
         console.log('Logged in and authenticated');
+        setElements(true);
+        testAPI();
       } else {
         console.log('Not authenticated');
+        setElements(false);
       }
     }
     function checkLoginState() {
@@ -54,6 +57,18 @@
         statusChangeCallback(response);
       });
     }
+    function testAPI(){
+        FB.api('/me?fields=name,email,birthday,location', function(response){
+          if(response && !response.error){
+            buildProfile(response);
+            }
+        }
+    )}
+    function logout(){
+        FB.logout(function(response){
+          setElements(false);
+        });
+      }
   </script>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
@@ -67,7 +82,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">
-          <a class="nav-link" id="logout" onclick="logout()" href="#">Logout</a>
+            <a class="nav-link" id="logout" onclick="logout()" href="#">Logout</a>
         </li>
         <li class="nav-item">
           <fb:login-button id="fb-btn" scope="public_profile,email,user_birthday" onlogin="checkLoginState();">
