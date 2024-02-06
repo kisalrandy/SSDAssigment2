@@ -1,5 +1,5 @@
 # SSDAssigment2
-# Drive an facebook App
+#  Google Driver and facebook App with OAUth
 
 npm install --save-dev --global http-server
 http-server --port 8000
